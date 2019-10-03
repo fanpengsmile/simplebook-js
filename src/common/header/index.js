@@ -9,13 +9,46 @@ import {
     NavSearch,
     Addition,
     Button,
-    SearchWrapper
+    SearchWrapper,
+    SearchInfo,
+    SearchInfoTitle,
+    SearchInfoSwitch,
+    SearchInfoItem,
+    SearchInfoList
 } from './style';
+import {actionCreators }from './store/index';
 
 class Header extends Component {
 
+    getListArea = (show, list, handleMouseEnter, mouseIn, handleMouseLeave, switchList,) => {
+        if (show || mouseIn) {
+            return (
+                <SearchInfo onMouseEnter = {handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                >
+                    <SearchInfoTitle>热门搜索
+                    <i className = 'iconfont'>&#xe862;</i>
+                        <SearchInfoSwitch
+                        onClick = {switchList}
+                        >
+                            换一换</SearchInfoSwitch>
+                    </SearchInfoTitle>
+                    <SearchInfoList>
+                        {list.map((item,index) => {
+                            return (<SearchInfoItem key = {index}>{item}</SearchInfoItem>)
+                        })}
+                    </SearchInfoList>
+                </SearchInfo>
+            )
+        }
+    }
+
     render() {
-        let {focused, handleInputFocus, handleInputBlur} = this.props;
+        const {mouseIn, focused, handleInputFocus, handleInputBlur, list, page, handleMouseEnter, handleMouseLeave, switchList} = this.props;
+        let pageList = [];
+        for (let i = page * 10; i < (page + 1) * 10; i ++) {
+            pageList.push(list[i]);
+        }
         return (
             <HeaderWrapper>
                 <Logo /*href = "/"*/></Logo>
@@ -41,6 +74,7 @@ class Header extends Component {
                         <i 
                         className = {focused ? 'focused iconfont' : 'iconfont'} 
                         >&#xe795;</i>
+                        {this.getListArea(focused, pageList, handleMouseEnter, mouseIn, handleMouseLeave, switchList)}
                     </SearchWrapper>
                     <Addition>
                         <Button className = 'reg'>注册</Button>
@@ -56,22 +90,36 @@ class Header extends Component {
 
 const mapState = (state) => {
     return {
-        focused: state.header.focused
+        // focused: state.get('header').get('focused')
+        focused: state.getIn(['header', 'focused']),
+        list: state.getIn(['header', 'list']),
+        page: state.getIn(['header', 'page']),
+        totalPage: state.getIn(['header', 'totalPage']),
+        mouseIn: state.getIn(['header', 'mouseIn'])
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
         handleInputFocus() {
-            const action = {
-                type: 'search_focused'
-            };
+            dispatch(actionCreators.getList());
+            const action = actionCreators.searchFocus();
             dispatch(action);
         },
         handleInputBlur() {
-            const action = {
-                type: 'search_blur'
-            };
+            const action = actionCreators.searchBlur();
+            dispatch(action);
+        },
+        handleMouseEnter() {
+            const action = actionCreators.mouseEnter();
+            dispatch(action);
+        },
+        handleMouseLeave() {
+            const action = actionCreators.mouseLeave();
+            dispatch(action);
+        },
+        switchList() {
+            const action = actionCreators.switchList();
             dispatch(action);
         }
     }
