@@ -27,10 +27,12 @@ class Header extends Component {
                 onMouseLeave={handleMouseLeave}
                 >
                     <SearchInfoTitle>热门搜索
-                    <i className = 'iconfont'>&#xe862;</i>
                         <SearchInfoSwitch
-                        onClick = {switchList}
+                        onClick = {() => switchList(this.spinIcon)}
                         >
+                            <i ref = {(icon) => {
+                                this.spinIcon = icon
+                            }} className = 'iconfont spin'>&#xe862;</i>
                             换一换</SearchInfoSwitch>
                     </SearchInfoTitle>
                     <SearchInfoList>
@@ -66,13 +68,13 @@ class Header extends Component {
                         classNames = 'slide'
                         >
                             <NavSearch
-                            onFocus = {handleInputFocus}
+                            onFocus = {() => handleInputFocus(list)}
                             onBlur = {handleInputBlur}
                             className = {focused ? 'focused' : ''} 
                             ></NavSearch>
                         </CSSTransition>
                         <i 
-                        className = {focused ? 'focused iconfont' : 'iconfont'} 
+                        className = {focused ? 'focused iconfont zoom' : 'iconfont zoom'} 
                         >&#xe795;</i>
                         {this.getListArea(focused, pageList, handleMouseEnter, mouseIn, handleMouseLeave, switchList)}
                     </SearchWrapper>
@@ -101,8 +103,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        handleInputFocus() {
-            dispatch(actionCreators.getList());
+        handleInputFocus(list) {
+            if (list.size === 0) {
+                dispatch(actionCreators.getList());
+            }
             const action = actionCreators.searchFocus();
             dispatch(action);
         },
@@ -118,7 +122,12 @@ const mapDispatch = (dispatch) => {
             const action = actionCreators.mouseLeave();
             dispatch(action);
         },
-        switchList() {
+        switchList(spinIcon) {
+            let rotate = parseInt(spinIcon.style.transform.replace(/[^0-9]/ig, ''));
+            if (!rotate) {
+                rotate = 0;
+            }
+            spinIcon.style.transform = 'rotate(' + (rotate + 360) + 'deg)';
             const action = actionCreators.switchList();
             dispatch(action);
         }

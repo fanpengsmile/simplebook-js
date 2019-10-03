@@ -27,7 +27,6 @@ export default (state = defaultState, action) => {
             return state.set('mouseIn', false);
         }
         case constants.SWITCH_LIST:{
-            console.log(state.page, state.totalPage)
             let pageIndex = state.get('page') + 1;
             return state.set('page', pageIndex > state.get('totalPage') - 1 ? 0 :pageIndex);
         }
