@@ -1,11 +1,28 @@
 import React, {Component} from 'react';
+import {WritterWrapper,
+    WritterItem} from '../style';
+import {connect} from 'react-redux';
 
 class Writter extends Component {
     render() {
+        const {list} = this.props;
         return (
-            <div>Writter</div>
+            <WritterWrapper>
+                {list.map((item) => {
+                    return (
+                <WritterItem key = {item.get('id')}>
+                    <img className = 'img' alt = 'no support!!!' src = {item.get('imgUrl')}></img>
+                    <p className = 'autor'>{item.get('desc')}</p>
+                </WritterItem>
+                    )
+                })}
+            </WritterWrapper>
         )
     }
 }
 
-export default Writter;
+const mapState = (state) => ({
+    list: state.getIn(['home', 'writterList'])
+})
+
+export default connect(mapState, null)(Writter);

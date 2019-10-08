@@ -18,7 +18,7 @@ export const HomeLeft = styled.div`
 `;
 
 export const HomeRight = styled.div`
-    width: 240px;
+    width: 280px;
     float: right;
 `;
 
@@ -76,5 +76,51 @@ export const ListInfo = styled.div`
         font-size: 13px;
         line-height: 24px;
         color: #999;
+    }
+`;
+
+export const RecommendWrapper = styled.div`
+    margin: 30px 0;
+    width: 280px;
+`;
+
+export const RecommendItem = styled.div`
+    width: 280px;
+    height: 50px;
+    background: url(${(props) => props.imgUrl});
+    background-size: contain;
+`;
+
+export const WritterWrapper = styled.div`
+    width: 278px;
+    border: 1px solid #dcdcdc;
+    height: 300px;
+    line-height: 300px;
+    border-radius: 3px;
+    text-align: center;
+`;
+
+export const WritterItem = styled.div`
+    height: 48px;
+    width: 280px;
+    margin-left: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+    .img {
+        display: block;
+        float: left;
+        width: 48px;
+        height: 48px;
+        border-radius: 24px;
+    }
+    .autor {
+        width: 100px;
+        height: 48px;
+        text-align: center;
+        display: block;
+        float: left;
+        color: #969696;
+        margin: 0;
+        line-height: 48px;
     }
 `;
