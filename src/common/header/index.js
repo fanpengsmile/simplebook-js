@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {CSSTransition} from 'react-transition-group';
 import {connect} from 'react-redux';
 import {
@@ -17,8 +17,9 @@ import {
     SearchInfoList
 } from './style';
 import {actionCreators }from './store/index';
+import {Link} from 'react-router-dom';
 
-class Header extends Component {
+class Header extends PureComponent {
 
     getListArea = (show, list, handleMouseEnter, mouseIn, handleMouseLeave, switchList,) => {
         if (show || mouseIn) {
@@ -53,7 +54,9 @@ class Header extends Component {
         }
         return (
             <HeaderWrapper>
+                <Link to = '/'>
                 <Logo /*href = "/"*/></Logo>
+                </Link>
                 <Nav>
                     <NavItem className = 'left active'>首页</NavItem>
                     <NavItem className = 'left'>下载App</NavItem>

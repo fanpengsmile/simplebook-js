@@ -124,3 +124,29 @@ export const WritterItem = styled.div`
         line-height: 48px;
     }
 `;
+
+export const LoadMore = styled.div`
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #a5a5a5;
+    border-radius: 20px;
+    color: #fff;
+    margin: 30px 0;
+    cursor: pointer;
+`;
+
+export const BackTop = styled.div`
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    right: 50px;
+    bottom: 50px;
+    text-align: center;
+    border: 1px solid gray;
+    font-size: 14px;
+    background: #ccc;
+    cursor: pointer;
+`;
