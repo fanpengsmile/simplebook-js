@@ -17,6 +17,7 @@ import {
     SearchInfoList
 } from './style';
 import {actionCreators }from './store/index';
+import {actionCreators as loginActionCreators}from '../../pages/login/store/index';
 import {Link} from 'react-router-dom';
 
 class Header extends PureComponent {
@@ -47,7 +48,7 @@ class Header extends PureComponent {
     }
 
     render() {
-        const {mouseIn, focused, handleInputFocus, handleInputBlur, list, page, handleMouseEnter, handleMouseLeave, switchList} = this.props;
+        const {logout, login, mouseIn, focused, handleInputFocus, handleInputBlur, list, page, handleMouseEnter, handleMouseLeave, switchList} = this.props;
         let pageList = [];
         for (let i = page * 10; i < (page + 1) * 10; i ++) {
             pageList.push(list[i]);
@@ -60,7 +61,12 @@ class Header extends PureComponent {
                 <Nav>
                     <NavItem className = 'left active'>首页</NavItem>
                     <NavItem className = 'left'>下载App</NavItem>
-                    <NavItem className = 'right'>登陆</NavItem>
+                    {login ? <NavItem 
+                    onClick = {logout}
+                    className = 'right'>退出</NavItem> : 
+                    <Link to = '/login'>
+                        <NavItem className = 'right'>登陆</NavItem>
+                    </Link>}
                     <NavItem className = 'right'>
                         <i className = 'iconfont'>&#xe636;</i>
                     </NavItem>
@@ -83,9 +89,11 @@ class Header extends PureComponent {
                     </SearchWrapper>
                     <Addition>
                         <Button className = 'reg'>注册</Button>
-                        <Button className = 'writter'>
-                        <i className = 'iconfont'>&#xe607;</i>
-                            写文章</Button>
+                        <Link to = '/write'>
+                            <Button className = 'writter'>
+                            <i className = 'iconfont'>&#xe607;</i>
+                                写文章</Button>
+                            </Link>
                     </Addition>
                 </Nav>
             </HeaderWrapper>
@@ -100,12 +108,16 @@ const mapState = (state) => {
         list: state.getIn(['header', 'list']),
         page: state.getIn(['header', 'page']),
         totalPage: state.getIn(['header', 'totalPage']),
-        mouseIn: state.getIn(['header', 'mouseIn'])
+        mouseIn: state.getIn(['header', 'mouseIn']),
+        login: state.getIn(['login', 'login'])
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
+        logout() {
+            dispatch(loginActionCreators.changeLogin(false))
+        },
         handleInputFocus(list) {
             if (list.size === 0) {
                 dispatch(actionCreators.getList());
