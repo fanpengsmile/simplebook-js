@@ -8,6 +8,7 @@ import Home from './pages/home';
 import Detail from './pages/detail/loadable';
 import Login from './pages/login/index';
 import Write from './pages/writer/index';
+import User from './pages/user/index';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path='/detail/:id' exact component = {Detail}></Route>
             <Route path='/login' exact component = {Login}></Route>
             <Route path='/write' exact component = {Write}></Route>
+            <Route path='/user' exact component = {User}></Route>
           </div>
         </BrowserRouter>
       </div>
