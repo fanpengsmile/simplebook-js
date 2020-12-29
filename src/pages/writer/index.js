@@ -1,15 +1,13 @@
-import React, {PureComponent} from 'react';
-import {Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-class Write extends PureComponent {
-    render() {
-        const {loginState} = this.props;
-        if (loginState) {
-            return <div>写文章</div>
-        } else {
-            return <Redirect to = '/login'/>
-        }
+const Write = (props) => {
+    const { loginState } = props;
+    if (loginState) {
+        return <div>写文章</div>
+    } else {
+        return <Redirect to='/login' />
     }
 }
 

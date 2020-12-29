@@ -1,6 +1,6 @@
-import React, {PureComponent} from 'react';
-import {CSSTransition} from 'react-transition-group';
-import {connect} from 'react-redux';
+import React from 'react';
+import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 import {
     HeaderWrapper,
     Logo,
@@ -16,87 +16,84 @@ import {
     SearchInfoItem,
     SearchInfoList
 } from './style';
-import {actionCreators }from './store/index';
-import {actionCreators as loginActionCreators}from '../../pages/login/store/index';
-import {Link} from 'react-router-dom';
+import { actionCreators } from './store/index';
+import { actionCreators as loginActionCreators } from '../../pages/login/store/index';
+import { Link } from 'react-router-dom';
 
-class Header extends PureComponent {
-
-    getListArea = (show, list, handleMouseEnter, mouseIn, handleMouseLeave, switchList,) => {
-        if (show || mouseIn) {
-            return (
-                <SearchInfo onMouseEnter = {handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                >
-                    <SearchInfoTitle>热门搜索
-                        <SearchInfoSwitch
-                        onClick = {() => switchList(this.spinIcon)}
-                        >
-                            <i ref = {(icon) => {
-                                this.spinIcon = icon
-                            }} className = 'iconfont spin'>&#xe862;</i>
-                            换一换</SearchInfoSwitch>
-                    </SearchInfoTitle>
-                    <SearchInfoList>
-                        {list.map((item,index) => {
-                            return (<SearchInfoItem key = {index}>{item}</SearchInfoItem>)
-                        })}
-                    </SearchInfoList>
-                </SearchInfo>
-            )
-        }
+const Header = (props) => {
+    const { logout, login, mouseIn, focused, handleInputFocus, handleInputBlur, list, page, handleMouseEnter, handleMouseLeave, switchList } = props;
+    let pageList = [];
+    for (let i = page * 10; i < (page + 1) * 10; i++) {
+        pageList.push(list[i]);
     }
-
-    render() {
-        const {logout, login, mouseIn, focused, handleInputFocus, handleInputBlur, list, page, handleMouseEnter, handleMouseLeave, switchList} = this.props;
-        let pageList = [];
-        for (let i = page * 10; i < (page + 1) * 10; i ++) {
-            pageList.push(list[i]);
-        }
-        return (
-            <HeaderWrapper>
-                <Link to = '/'>
+    return (
+        <HeaderWrapper>
+            <Link to='/'>
                 <Logo /*href = "/"*/></Logo>
-                </Link>
-                <Nav>
-                    <NavItem className = 'left active'>首页</NavItem>
-                    <NavItem className = 'left'>下载App</NavItem>
-                    {login ? <NavItem 
-                    onClick = {logout}
-                    className = 'right'>退出</NavItem> : 
-                    <Link to = '/login'>
-                        <NavItem className = 'right'>登陆</NavItem>
+            </Link>
+            <Nav>
+                <NavItem className='left active'>首页</NavItem>
+                <NavItem className='left'>下载App</NavItem>
+                {login ? <NavItem
+                    onClick={logout}
+                    className='right'>退出</NavItem> :
+                    <Link to='/login'>
+                        <NavItem className='right'>登陆</NavItem>
                     </Link>}
-                    <NavItem className = 'right'>
-                        <i className = 'iconfont'>&#xe636;</i>
-                    </NavItem>
-                    <SearchWrapper>
-                        <CSSTransition
-                        in = {focused}
-                        timeout = {200}
-                        classNames = 'slide'
-                        >
-                            <NavSearch
-                            onFocus = {() => handleInputFocus(list)}
-                            onBlur = {handleInputBlur}
-                            className = {focused ? 'focused' : ''} 
-                            ></NavSearch>
-                        </CSSTransition>
-                        <i 
-                        className = {focused ? 'focused iconfont zoom' : 'iconfont zoom'} 
-                        >&#xe795;</i>
-                        {this.getListArea(focused, pageList, handleMouseEnter, mouseIn, handleMouseLeave, switchList)}
-                    </SearchWrapper>
-                    <Addition>
-                        <Button className = 'reg'>注册</Button>
-                        <Link to = '/write'>
-                            <Button className = 'writter'>
-                            <i className = 'iconfont'>&#xe607;</i>
-                                写文章</Button>
-                            </Link>
-                    </Addition>
-                </Nav>
-            </HeaderWrapper>
+                <NavItem className='right'>
+                    <i className='iconfont'>&#xe636;</i>
+                </NavItem>
+                <SearchWrapper>
+                    <CSSTransition
+                        in={focused}
+                        timeout={200}
+                        classNames='slide'
+                    >
+                        <NavSearch
+                            onFocus={() => handleInputFocus(list)}
+                            onBlur={handleInputBlur}
+                            className={focused ? 'focused' : ''}
+                        ></NavSearch>
+                    </CSSTransition>
+                    <i
+                        className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}
+                    >&#xe795;</i>
+                    {getListArea(focused, pageList, handleMouseEnter, mouseIn, handleMouseLeave, switchList)}
+                </SearchWrapper>
+                <Addition>
+                    <Button className='reg'>注册</Button>
+                    <Link to='/write'>
+                        <Button className='writter'>
+                            <i className='iconfont'>&#xe607;</i>
+                            写文章</Button>
+                    </Link>
+                </Addition>
+            </Nav>
+        </HeaderWrapper>
+    );
+}
+
+const getListArea = (show, list, handleMouseEnter, mouseIn, handleMouseLeave, switchList) => {
+    if (show || mouseIn) {
+        return (
+            <SearchInfo onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                <SearchInfoTitle>热门搜索
+                    <SearchInfoSwitch
+                        onClick={() => switchList(this.spinIcon)}
+                    >
+                        <i ref={(icon) => {
+                            this.spinIcon = icon
+                        }} className='iconfont spin'>&#xe862;</i>
+                        换一换</SearchInfoSwitch>
+                </SearchInfoTitle>
+                <SearchInfoList>
+                    {list.map((item, index) => {
+                        return (<SearchInfoItem key={index}>{item}</SearchInfoItem>)
+                    })}
+                </SearchInfoList>
+            </SearchInfo>
         )
     }
 }

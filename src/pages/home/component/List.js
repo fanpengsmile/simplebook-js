@@ -1,34 +1,33 @@
-import React, {PureComponent} from 'react';
-import {ListItem,
+import React from 'react';
+import {
+    ListItem,
     ListInfo,
-LoadMore} from '../style';
-import {connect} from 'react-redux';
+    LoadMore
+} from '../style';
+import { connect } from 'react-redux';
 import * as actionCreators from '../store/actionCreators';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-class List extends PureComponent {
-    render() {
-        const {list, page, getMoreList} = this.props;
-        console.log(this.context)
-        return (
-            <div>
-                {list.map((item, index) => (
-                    <Link key = {index} to = {'/detail/' + item.get('id')}>
-                        <ListItem >
-                        <img className = 'pic' alt = 'no support' src = {item.get('imgUrl')}></img>
+const List = (props) => {
+    const { list, page, getMoreList } = props;
+    return (
+        <div>
+            {list.map((item, index) => (
+                <Link key={index} to={'/detail/' + item.get('id')}>
+                    <ListItem >
+                        <img className='pic' alt='no support' src={item.get('imgUrl')}></img>
                         <ListInfo>
-                            <h3 className = 'title'>{item.get('title')}</h3>
-                            <p className = 'desc'>{item.get('desc')}</p>
+                            <h3 className='title'>{item.get('title')}</h3>
+                            <p className='desc'>{item.get('desc')}</p>
                         </ListInfo>
                     </ListItem>
                 </Link>
-                ))}
-                <LoadMore
-                onClick = {() => getMoreList(page)}
-                >加载更多</LoadMore>
-            </div>
-        )
-    }
+            ))}
+            <LoadMore
+                onClick={() => getMoreList(page)}
+            >加载更多</LoadMore>
+        </div>
+    )
 }
 
 const mapState = (state) => ({

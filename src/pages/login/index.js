@@ -1,27 +1,27 @@
-import React, {PureComponent} from 'react';
-import {LoginWrapper, LoginBox, Input, Button} from './style';
-import {Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {actionCreators} from './store/index';
+import React from 'react';
+import { LoginWrapper, LoginBox, Input, Button } from './style';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { actionCreators } from './store/index';
 
-class Login extends PureComponent {
-    render() {
-        const {login, loginState} = this.props;
-        if (loginState) {
-            return <Redirect to = '/' />
-        } else {
-            return (
-                <LoginWrapper>
-                    <LoginBox>
-                        <Input placeholder = '账户：' ref = {(input) => {this.account = input}}/>
-                        <Input placeholder = '密码：' type = 'password' ref = {(input) => {this.password = input}}/>
-                        <Button
-                        onClick = {() => login(this.account, this.password)}
-                        >登录</Button>
-                    </LoginBox>
-                </LoginWrapper>
-            )
-        }
+let account, password;
+
+const Login = (props) => {
+    const { login, loginState } = props;
+    if (loginState) {
+        return <Redirect to='/' />
+    } else {
+        return (
+            <LoginWrapper>
+                <LoginBox>
+                    <Input placeholder='账户：' ref={(input) => { account = input }} />
+                    <Input placeholder='密码：' type='password' ref={(input) => { password = input }} />
+                    <Button
+                        onClick={() => login(account, password)}
+                    >登录</Button>
+                </LoginBox>
+            </LoginWrapper>
+        )
     }
 }
 
