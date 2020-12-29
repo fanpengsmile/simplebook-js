@@ -20,6 +20,8 @@ import { actionCreators } from './store/index';
 import { actionCreators as loginActionCreators } from '../../pages/login/store/index';
 import { Link } from 'react-router-dom';
 
+let spinIcon;
+
 const Header = (props) => {
     const { logout, login, mouseIn, focused, handleInputFocus, handleInputBlur, list, page, handleMouseEnter, handleMouseLeave, switchList } = props;
     let pageList = [];
@@ -81,10 +83,10 @@ const getListArea = (show, list, handleMouseEnter, mouseIn, handleMouseLeave, sw
             >
                 <SearchInfoTitle>热门搜索
                     <SearchInfoSwitch
-                        onClick={() => switchList(this.spinIcon)}
+                        onClick={() => switchList(spinIcon)}
                     >
                         <i ref={(icon) => {
-                            this.spinIcon = icon
+                            spinIcon = icon
                         }} className='iconfont spin'>&#xe862;</i>
                         换一换</SearchInfoSwitch>
                 </SearchInfoTitle>
