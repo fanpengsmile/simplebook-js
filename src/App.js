@@ -10,7 +10,7 @@ import Login from './pages/login/index';
 import Write from './pages/writer/index';
 import User from './pages/user/index';
 
-function App() {
+const App = () => {
   return (
     <Provider store = {store}>
       <div>
